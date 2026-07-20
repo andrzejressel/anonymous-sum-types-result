@@ -1,0 +1,14 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/app",
+    "crates/lib"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+anon_sum_types_lib = { path = "crates/lib" }
+paste = "1.0.15"

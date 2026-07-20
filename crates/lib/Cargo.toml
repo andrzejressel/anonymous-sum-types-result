@@ -1,0 +1,7 @@
+[package]
+name = "anon_sum_types_lib"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+paste.workspace = true

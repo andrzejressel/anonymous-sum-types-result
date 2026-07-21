@@ -34,4 +34,4 @@ clippy-to-file:
     python external/sarif-normalizer.py --in-place rust-clippy-results.sarif
 
 docs $RUSTDOCFLAGS="--cfg docsrs":
-    cargo +{{nightly}} doc --no-deps --features all -p finance_as_code_budget
+    cargo +{{nightly}} doc --no-deps -p finance_as_code_budget

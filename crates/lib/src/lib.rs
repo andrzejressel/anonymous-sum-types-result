@@ -23,7 +23,7 @@ pub struct ErrorHolder<T> {
     stack: Vec<StackTraceElementWithContext>,
 }
 
-impl <T> ErrorHolder<T> {
+impl<T> ErrorHolder<T> {
     pub fn new(error: T, stack: Vec<StackTraceElementWithContext>) -> Self {
         Self { error, stack }
     }
@@ -125,10 +125,14 @@ macro_rules! create_error {
     }};
 }
 
-pub fn create_error<T, E>(error: E, stack_trace_element_with_context: StackTraceElementWithContext) -> Result<T, ErrorHolder<E>> {
-    let mut stack = Vec::new();
-    stack.push(stack_trace_element_with_context);
-    Err(ErrorHolder::new(error, stack))
+pub fn create_error<T, E>(
+    error: E,
+    stack_trace_element_with_context: StackTraceElementWithContext,
+) -> Result<T, ErrorHolder<E>> {
+    Err(ErrorHolder::new(
+        error,
+        vec![stack_trace_element_with_context],
+    ))
 }
 
 #[macro_export]

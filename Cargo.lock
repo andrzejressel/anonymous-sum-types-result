@@ -32,7 +32,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bon",
- "itertools",
+ "itertools 0.15.0",
  "pulumi_gestalt_build",
  "pulumi_gestalt_rust",
  "serde",
@@ -702,6 +702,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -908,7 +917,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b570b25f7617e43d59005d0990ccb79e950a423952cea19671b7a876da390adf"
 dependencies = [
  "anyhow",
- "itertools",
+ "itertools 0.14.0",
  "proc-macro2",
  "quote",
  "syn 2.0.119",
@@ -972,7 +981,7 @@ dependencies = [
  "askama",
  "convert_case",
  "handlebars",
- "itertools",
+ "itertools 0.14.0",
  "pathdiff",
  "prettyplease",
  "proc-macro2",
@@ -1088,7 +1097,7 @@ checksum = "34b4dcb30a2a514d04ed07a83c5d6a84ef85837253dbd4046f55131d82dfdf33"
 dependencies = [
  "anyhow",
  "convert_case",
- "itertools",
+ "itertools 0.14.0",
  "pulumi_gestalt_serde_constant_string",
  "serde",
  "serde_json",

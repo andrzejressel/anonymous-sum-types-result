@@ -5,7 +5,7 @@ use crate::github::types::{
     RepositoryRulesetRulesCopilotCodeReview, RepositoryRulesetRulesPullRequest,
     RepositoryRulesetRulesRequiredStatusChecksRequiredCheck,
 };
-use GithubIntegration::{Any, GithubActions, GithubAdvancedSecurity, Mergify};
+use GithubIntegration::{Any, GithubActions, Mergify};
 use anyhow::Result;
 use github::types::RepositoryRulesetRulesRequiredStatusChecks;
 use pulumi_gestalt_rust::{Context, Output};
@@ -21,7 +21,6 @@ fn main() {
 enum GithubIntegration {
     Any,
     GithubActions,
-    GithubAdvancedSecurity,
     Mergify,
 }
 
@@ -30,7 +29,6 @@ impl GithubIntegration {
         match self {
             Any => 0,
             GithubActions => 15368,
-            GithubAdvancedSecurity => 57789,
             Mergify => 10562,
         }
     }

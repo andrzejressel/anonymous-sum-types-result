@@ -1,0 +1,60 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  MISE_CARGO_BINSTALL_ONLY: "1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - run: git config --system core.longpaths true
+        if: runner.os == 'Windows'
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          cache-bin: "false"
+      - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+      - name: Install
+        run: just install
+      - name: Check
+        run: just check
+      - name: Test
+        run: just test
+      - name: Test with coverage
+        run: just test-coverage
+      - name: Upload coverage data to codecov
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        with:
+          files: covertura.xml
+          fail_ci_if_error: true
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        with:
+          files: target/nextest/default/junit.xml
+          report_type: test_results
+          fail_ci_if_error: true
+      - name: Format
+        run: just fmt
+      - run: git add . && git diff
+      - run: git diff --cached
+      - name: Ensure no files have changed
+        run: git add . && git diff --quiet && git diff --cached --quiet

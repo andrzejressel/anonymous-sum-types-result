@@ -51,6 +51,7 @@ jobs:
           files: target/nextest/default/junit.xml
           report_type: test_results
           fail_ci_if_error: true
+          skip_validation: false # https://github.com/codecov/codecov-action/issues/1876
       - name: Format
         run: just fmt
       - run: git add . && git diff

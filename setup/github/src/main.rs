@@ -5,11 +5,11 @@ use crate::github::types::{
     RepositoryRulesetRulesCopilotCodeReview, RepositoryRulesetRulesPullRequest,
     RepositoryRulesetRulesRequiredStatusChecksRequiredCheck,
 };
+use GithubIntegration::{Any, GithubActions, GithubAdvancedSecurity, Mergify};
 use anyhow::Result;
 use github::types::RepositoryRulesetRulesRequiredStatusChecks;
 use pulumi_gestalt_rust::{Context, Output};
 use std::ops::Deref;
-use GithubIntegration::{Any, GithubActions, GithubAdvancedSecurity, Mergify};
 
 mod github;
 mod github_workflow;
@@ -94,7 +94,10 @@ fn pulumi_main(ctx: &Context) -> Result<()> {
                             .required_checks(
                                 [
                                     &[
-                                        create_check("docs/readthedocs.org:anonymous-sum-types-result", Any),
+                                        create_check(
+                                            "docs/readthedocs.org:anonymous-sum-types-result",
+                                            Any,
+                                        ),
                                         // create_check(pulumi_format!(ctx, "docs/readthedocs.org:{}", repository.name), Any),
                                         // create_check("CodeQL", GithubAdvancedSecurity),
                                         // create_check("clippy", GithubAdvancedSecurity),

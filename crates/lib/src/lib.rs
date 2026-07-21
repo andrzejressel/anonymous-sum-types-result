@@ -49,7 +49,7 @@ impl<T: Debug> Debug for ErrorHolder<T> {
                 first_element
                     .stack_trace_element
                     .file_name
-                    .replace("/", "\\"),
+                    .replace("/", &std::path::MAIN_SEPARATOR.to_string()),
                 first_element.stack_trace_element.line_number,
                 first_element.stack_trace_element.column_number
             )?;
@@ -64,8 +64,12 @@ impl<T: Debug> Debug for ErrorHolder<T> {
             )?;
             writeln!(
                 f,
-                "             at .\\{}:{}:{}",
-                element.stack_trace_element.file_name,
+                "             at .{}{}:{}:{}",
+                std::path::MAIN_SEPARATOR,
+                element
+                    .stack_trace_element
+                    .file_name
+                    .replace("/", &std::path::MAIN_SEPARATOR.to_string()),
                 element.stack_trace_element.line_number,
                 element.stack_trace_element.column_number
             )?;
@@ -76,10 +80,10 @@ impl<T: Debug> Debug for ErrorHolder<T> {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct StackTraceElement {
     function_name: &'static str,
-    file_name: &'static str,
+    file_name: String,
     line_number: u32,
     column_number: u32,
 }
@@ -87,13 +91,13 @@ pub struct StackTraceElement {
 impl StackTraceElement {
     pub fn new(
         function_name: &'static str,
-        file_name: &'static str,
+        file_name: &str,
         line_number: u32,
         column_number: u32,
     ) -> Self {
         Self {
             function_name,
-            file_name,
+            file_name: file_name.to_string(),
             line_number,
             column_number,
         }
@@ -314,8 +318,14 @@ mod tests {
         let location = create_stack_trace!();
         let expected = StackTraceElement {
             function_name: "anon_sum_types_lib::tests::test_stack_trace_location",
-            file_name: "crates\\lib\\src\\lib.rs",
-            line_number: line!() - 4, // Adjusted to match the line number of the create_stack_trace! macro invocation
+            file_name: std::path::Path::new("crates")
+                .join("lib")
+                .join("src")
+                .join("lib.rs")
+                .to_str()
+                .unwrap()
+                .to_string(),
+            line_number: line!() - 10, // Adjusted to match the line number of the create_stack_trace! macro invocation
             column_number: 24,
         };
         assert_eq!(location, expected);
@@ -327,8 +337,14 @@ mod tests {
         let expected = StackTraceElementWithContext {
             stack_trace_element: StackTraceElement {
                 function_name: "anon_sum_types_lib::tests::test_context",
-                file_name: "crates\\lib\\src\\lib.rs",
-                line_number: line!() - 5, // Adjusted to match the line number of the context! macro invocation
+                file_name: std::path::Path::new("crates")
+                    .join("lib")
+                    .join("src")
+                    .join("lib.rs")
+                    .to_str()
+                    .unwrap()
+                    .to_string(),
+                line_number: line!() - 11, // Adjusted to match the line number of the context! macro invocation
                 column_number: 24,
             },
             context: "hello world".to_string(),

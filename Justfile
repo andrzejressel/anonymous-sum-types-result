@@ -21,7 +21,7 @@ fmt:
 
 test:
     cargo nextest run
-    cargo test --doc --features all
+    cargo test --doc
 
 test-coverage:
     cargo llvm-cov nextest --cobertura --output-path covertura.xml

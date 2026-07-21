@@ -49,7 +49,7 @@ impl<T: Debug> Debug for ErrorHolder<T> {
                 first_element
                     .stack_trace_element
                     .file_name
-                    .replace("/", &std::path::MAIN_SEPARATOR.to_string()),
+                    .replace("/", std::path::MAIN_SEPARATOR_STR),
                 first_element.stack_trace_element.line_number,
                 first_element.stack_trace_element.column_number
             )?;
@@ -69,7 +69,7 @@ impl<T: Debug> Debug for ErrorHolder<T> {
                 element
                     .stack_trace_element
                     .file_name
-                    .replace("/", &std::path::MAIN_SEPARATOR.to_string()),
+                    .replace("/", std::path::MAIN_SEPARATOR_STR),
                 element.stack_trace_element.line_number,
                 element.stack_trace_element.column_number
             )?;

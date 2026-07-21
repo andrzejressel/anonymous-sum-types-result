@@ -38,7 +38,7 @@ impl <T> ErrorHolder<T> {
 }
 
 impl<T: Debug> Debug for ErrorHolder<T> {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Error: {:?}", self.error)?;
         writeln!(f)?;
 

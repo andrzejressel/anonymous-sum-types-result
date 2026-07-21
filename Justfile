@@ -21,7 +21,7 @@ fmt:
 
 test:
     cargo nextest run
-    cargo test --doc --features all
+    cargo test --doc
 
 test-coverage:
     cargo llvm-cov nextest --cobertura --output-path covertura.xml
@@ -34,4 +34,4 @@ clippy-to-file:
     python external/sarif-normalizer.py --in-place rust-clippy-results.sarif
 
 docs $RUSTDOCFLAGS="--cfg docsrs":
-    cargo +{{nightly}} doc --no-deps -p finance_as_code_budget
+    cargo +{{nightly}} doc --no-deps -p anon_sum_types_lib

@@ -3,3 +3,12 @@
 .air
 .agents
 .idea/
+covertura.xml
+
+# codecov
+/codecov
+/codecov.SHA256SUM
+/codecov.SHA256SUM.sig
+/codecov.exe
+/codecov.exe.SHA256SUM
+/codecov.exe.SHA256SUM.sig

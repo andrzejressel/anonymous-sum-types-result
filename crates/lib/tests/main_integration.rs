@@ -1,6 +1,11 @@
 use anon_sum_types_lib::{Result2, ResultErrorHolderExt};
 use anon_sum_types_lib::{context, create_error, create_test_enum};
 
+#[cfg(target_os = "windows")]
+const EXPECTED: &str = include_str!("expected/main_integration_windows.txt");
+#[cfg(not(target_os = "windows"))]
+const EXPECTED: &str = include_str!("expected/main_integration_unix.txt");
+
 fn my_test() -> Result2<String, MainError> {
     failing_fn_1().conv()?;
     failing_fn_2().conv()?;
@@ -49,7 +54,7 @@ fn test_my_test_succeeds() {
     let result = my_test();
     assert!(result.is_err());
     let error = result.unwrap_err();
-    let error_str = format!("{:?}", error);
-    let expected = "Error: MyNewError2(\"failing_fn_3\")\n\nthread 'null' (1) panicked at crates\\lib\\tests\\main_integration.rs:24:5:\nstack backtrace:\n   0: main_integration::failing_fn_3\n             at .\\crates\\lib\\tests\\main_integration.rs:24:5\n             context: INIT\n   1: main_integration::failing_fn_3\n             at .\\crates\\lib\\tests\\main_integration.rs:25:18\n             context: failing_fn_3 context\n   2: main_integration::my_test\n             at .\\crates\\lib\\tests\\main_integration.rs:11:18\n             context: my_test context\n";
+    let error_str = format!("{:?}", error).replace("\r\n", "\n");
+    let expected = EXPECTED.replace("\r\n", "\n");
     assert_eq!(error_str, expected);
 }

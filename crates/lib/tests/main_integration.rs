@@ -50,10 +50,9 @@ SubError2_mapper_between!(MainError);
 SubError1_mapper_between!(MainError2);
 
 #[test]
-fn test_my_test_succeeds() {
+fn test_my_test_returns_expected_error() {
     let result = my_test();
-    assert!(result.is_err());
-    let error = result.unwrap_err();
+    let error = result.expect_err("expected my_test to return an error");
     let error_str = format!("{:?}", error).replace("\r\n", "\n");
     let expected = EXPECTED.replace("\r\n", "\n");
     assert_eq!(error_str, expected);

@@ -2,21 +2,6 @@ use std::fmt::Debug;
 
 pub type Result2<T, E> = Result<T, ErrorHolder<E>>;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
-struct AccountId(u32);
-#[derive(Debug, PartialEq, Eq, Clone)]
-struct User(u32);
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct AccountNotFound {
-    account_id: AccountId,
-}
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct UserNotFound {
-    user_id: User,
-}
-
 #[derive(PartialEq, Eq, Clone)]
 pub struct ErrorHolder<T> {
     error: T,
@@ -273,13 +258,28 @@ macro_rules! create_test_enum {
     };
 }
 
-create_test_enum!(TestEnum, UserNotFound);
-create_test_enum!(TestEnum2, UserNotFound, AccountNotFound);
-
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    create_test_enum!(TestEnum, UserNotFound);
+    create_test_enum!(TestEnum2, UserNotFound, AccountNotFound);
     TestEnum_mapper_between!(TestEnum2);
+
+    #[derive(Debug, PartialEq, Eq, Clone)]
+    struct AccountId(u32);
+    #[derive(Debug, PartialEq, Eq, Clone)]
+    struct User(u32);
+
+    #[derive(Debug, PartialEq, Eq, Clone)]
+    pub struct AccountNotFound {
+        account_id: AccountId,
+    }
+
+    #[derive(Debug, PartialEq, Eq, Clone)]
+    pub struct UserNotFound {
+        user_id: User,
+    }
 
     #[test]
     fn create_test_enum_wraps_struct_in_matching_variant() {

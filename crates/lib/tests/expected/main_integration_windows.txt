@@ -1,0 +1,13 @@
+Error: MyNewError2("failing_fn_3")
+
+thread 'null' (1) panicked at crates\lib\tests\main_integration.rs:29:5:
+stack backtrace:
+   0: main_integration::failing_fn_3
+             at .\crates\lib\tests\main_integration.rs:29:5
+             context: INIT
+   1: main_integration::failing_fn_3
+             at .\crates\lib\tests\main_integration.rs:30:18
+             context: failing_fn_3 context
+   2: main_integration::my_test
+             at .\crates\lib\tests\main_integration.rs:16:18
+             context: my_test context

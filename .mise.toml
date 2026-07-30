@@ -2,7 +2,7 @@
 just = "1.57.0"
 "cargo:cargo-nextest" = "0.9.76"
 "cargo:sd" = "1.0.0"
-"cargo:cargo-llvm-cov" = "0.8.0"
+"cargo:cargo-llvm-cov" = "0.8.7"
 "cargo:clippy-sarif" = "0.8.0"
 cargo-binstall = "1.21.0"
 rg = "15.2.0"

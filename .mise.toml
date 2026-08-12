@@ -1,6 +1,6 @@
 [tools]
 just = "1.58.0"
-"cargo:cargo-nextest" = "0.9.140"
+"cargo:cargo-nextest" = "0.9.143"
 "cargo:sd" = "1.0.0"
 "cargo:cargo-llvm-cov" = "0.8.7"
 "cargo:clippy-sarif" = "0.8.0"
